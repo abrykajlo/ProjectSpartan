@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" >
     </uses-permission>
 
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -13,7 +14,8 @@
         <activity
             android:name=".LoadActivity"
             android:label="@string/title_activity_load"
-            android:screenOrientation="reverseLandscape" >
+            android:screenOrientation="reverseLandscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +24,17 @@
         </activity>
         <activity
             android:name=".ConfigureActivity"
-            android:label="@string/title_activity_configure" >
+            android:label="@string/title_activity_configure"
+            android:screenOrientation="reverseLandscape">
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:screenOrientation="reverseLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
     </application>
 

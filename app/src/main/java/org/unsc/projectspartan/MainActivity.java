@@ -105,6 +105,84 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void lightsOn(View view) {
+        try {
+            JSONObject j = new JSONObject();
+            j.put("lights", "on");
+            mSocket.getOutputStream().write(j.toString().getBytes());
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void lightsOff(View view) {
+        try {
+            JSONObject j = new JSONObject();
+            j.put("lights", "off");
+            mSocket.getOutputStream().write(j.toString().getBytes());
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void lightsAuto(View view) {
+        try {
+            JSONObject j = new JSONObject();
+            j.put("lights", "auto");
+            mSocket.getOutputStream().write(j.toString().getBytes());
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void headlightsOn(View view) {
+        try {
+            JSONObject j = new JSONObject();
+            j.put("head lights red", "on");
+            j.put("head lights white", "on");
+            mSocket.getOutputStream().write(j.toString().getBytes());
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void headlightsOff(View view) {
+        try {
+            JSONObject j = new JSONObject();
+            j.put("head lights red", "off");
+            j.put("head lights white", "off");
+            mSocket.getOutputStream().write(j.toString().getBytes());
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void coolingOn(View view) {
+        try {
+            JSONObject j = new JSONObject();
+            j.put("peltier", "on");
+            j.put("water fan", "on");
+            j.put("water pump", "on");
+            j.put("head fans", "on");
+            mSocket.getOutputStream().write(j.toString().getBytes());
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void coolingOff(View view) {
+        try {
+            JSONObject j = new JSONObject();
+            j.put("peltier", "off");
+            j.put("water fan", "off");
+            j.put("water pump", "off");
+            j.put("head fans", "off");
+            mSocket.getOutputStream().write(j.toString().getBytes());
+        } catch (Exception e) {
+
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

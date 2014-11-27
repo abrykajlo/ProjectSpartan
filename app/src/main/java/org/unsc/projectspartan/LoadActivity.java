@@ -17,20 +17,15 @@ import java.util.Set;
 public class LoadActivity extends Activity {
     private BluetoothAdapter mAdapter;
     private Set<BluetoothDevice> mPairedDevices;
-    private File mConfigFile;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-//        setProgressBarIndeterminateVisibility(true);
         setContentView(R.layout.activity_load);
 
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         mAdapter.enable();
         mPairedDevices = mAdapter.getBondedDevices();
-//        mConfigFile = new File(getApplicationContext().getFilesDir(), "bluetooth.conf");
     }
 
     @Override
@@ -48,7 +43,7 @@ public class LoadActivity extends Activity {
                     }
                 }
             }
-        }, 5000);
+        }, 1000);
     }
 
     @Override

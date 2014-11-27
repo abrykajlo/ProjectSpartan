@@ -21,17 +21,16 @@ import java.lang.reflect.Method;
 public class MainActivity extends Activity {
     private BluetoothDevice mDevice;
     private BluetoothSocket mSocket;
-    private TextView tv1, tv2;
-    private boolean isLed0on, isLed1on;
+    private TextView tv0, tv1, tv2, tv3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
-        isLed0on = false;
-        isLed1on = false;
-        tv1 = (TextView) findViewById(R.id.textview1);
-        tv2 = (TextView) findViewById(R.id.textview2);
+        tv0 = (TextView) findViewById(R.id.temp0);
+        tv1 = (TextView) findViewById(R.id.temp1);
+        tv2 = (TextView) findViewById(R.id.temp2);
+        tv3 = (TextView) findViewById(R.id.temp3);
         mDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
         new connectToHost().start();
@@ -54,24 +53,27 @@ public class MainActivity extends Activity {
 
     private class receivingThread extends Thread {
         private byte[] bytes;
-        private double temp0, temp1;
+        private double temp0, temp1, temp2, temp3;
         @Override
         public void run() {
             while (true) {
                 try {
 
-                    bytes = new byte[100];
+                    bytes = new byte[1024];
                     int i = mSocket.getInputStream().read(bytes);
                     JSONObject j = new JSONObject(new String(bytes));
-                    j = j.getJSONObject("temperature");
-                    temp0 = j.getDouble("temp0");
-                    temp1 = j.getDouble("temp1");
+                    temp0 = j.getDouble("head temperature");
+                    temp1 = j.getDouble("armpits temperature");
+                    temp2 = j.getDouble("crotch temperature");
+                    temp3 = j.getDouble("water temperature");
                     if (i != -1) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                tv1.setText("" + temp0);
-                                tv2.setText("" + temp1);
+                                tv0.setText(String.format(" %.1f", temp0));
+                                tv1.setText(String.format(" %.1f", temp1));
+                                tv2.setText(String.format(" %.1f", temp2));
+                                tv3.setText(String.format(" %.1f", temp3));
                             }
                         });
                     }
@@ -108,50 +110,6 @@ public class MainActivity extends Activity {
         super.onDestroy();
         try {
             mSocket.close();
-        } catch (Exception e) {
-
-        }
-    }
-
-    public void toggleLed0(View view){
-        try {
-            JSONObject j = new JSONObject();
-            if (isLed0on) {
-                j.put("value67", 0);
-                isLed0on = false;
-            } else {
-                j.put("value67", 1);
-                isLed0on = true;
-            }
-
-            if (isLed1on) {
-                j.put("value68", 1);
-            } else {
-                j.put("value68", 0);
-            }
-            mSocket.getOutputStream().write(j.toString().getBytes());
-        } catch (Exception e) {
-
-        }
-    }
-
-    public void toggleLed1(View view){
-        try {
-            JSONObject j = new JSONObject();
-            if (isLed0on) {
-                j.put("value67", 1);
-            } else {
-                j.put("value67", 0);
-            }
-
-            if (isLed1on) {
-                j.put("value68", 0);
-                isLed1on = false;
-            } else {
-                j.put("value68", 1);
-                isLed1on = true;
-            }
-            mSocket.getOutputStream().write(j.toString().getBytes());
         } catch (Exception e) {
 
         }
